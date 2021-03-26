@@ -2,9 +2,30 @@
 <html lang="en">
 
 <style>
+.separator {
+  max-width: 850px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 10px;
+  border-bottom: solid 1px #CCC;
+}
+time{
+  color: #9E9E9E;
+  font-size: 0.85em;
+  float: left;
+}
 body{
   overflow-y:scroll;
 }
+.content {
+  max-width: 900px;
+  margin: auto;
+  background: white;
+  padding: 10px;
+}
+
 </style>
 
   <head>
@@ -15,16 +36,15 @@ body{
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
-    <title>Home | Harmon</title>
+    <title>Blog | Harmon</title>
   </head>
   <body>
-
 
 
     <div class="container sticky-top my-5">
         <ul class="nav nav-pills bg-white">
             <li class="nav-item">
-              <a class="nav-link active" href="index.html">Home</a>
+              <a class="nav-link" href="index.html">Home</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="about.html">About Me</a>
@@ -37,25 +57,42 @@ body{
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="archive.html">Archive</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="random.html">Randoms</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="random.html">Randoms</a>
             </li>
           </ul> 
     </div>
 
-    <div class="container my-5">
-        <h1>Harmon Prayogi</h1>
-        <p class="lead">
-            Enjoys Physics, Programming, and Particles.
+    
+    <div class="container">
+      <div class="content">
+        <h3 >Nasihat untuk diri sendiri sebagai manusia</h3>
+        <time datetime="" title="" pubdate>27 March 2021</time>
+
+        <br>
+        
+        <p>
+            Apa yang menjadikan orang itu manusia tidak dilihat semata-mata dari fisiknya tetapi lebih dalam dari itu yaitu apa yang tidak terlihat dari tubuhnya. Perilaku atau kebiasaan menjadi parameter diluar yang fisik. Hal ini terbentuk dari apa yang manusia kerjakan dalam kesehariannya serta kebijaksanaan-kebijaksanaan yang melekat dalam dirinya. Berikut adalah beberapa kebijaksanaan yang menuntun kepada kebiasaan untuk hidup menjadi manusia.
         </p>
+    
+        <a class="btn btn-primary mb-3" href="random/2021/nasihat-diri/index.html" role="button">Read more</a>
+    
+        <br>
+        
+        <em>tags:</em>
+        <a href="tag/simulation.html" class="btn btn-lg btn-sm">Simulation</a>
+        <a href="#" class="btn btn-lg btn-sm">Statistics</a>
+      </div>    
     </div>
 
 
+    <div class="container">
+        <div class="separator"></div>
+    </div>
 
 
- 
-
+    
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
