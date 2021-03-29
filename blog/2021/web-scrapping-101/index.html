@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+
+<style>
+.separator {
+  max-width: 850px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 10px;
+  border-bottom: solid 1px #CCC;
+}
+time{
+  color: #9E9E9E;
+  font-size: 0.85em;
+  float: left;
+}
+body{
+  overflow-y:scroll;
+}
+.content {
+  max-width: 1000px;
+  margin: auto;
+  background: white;
+}
+</style>
+
+  <head>
+  
+  <link rel="stylesheet" href="../../../css/mystyle.css">
+  
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+
+    <title>Blog | Harmon</title>
+  </head>
+  <body>
+
+
+    <div class="container sticky-top my-5">
+        <ul class="nav nav-pills bg-white">
+            <li class="nav-item">
+              <a class="nav-link" href="../../../index.html">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="../../../about.html">About Me</a>
+              </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../../../project.html">Project</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="../../../blog.html">Blog</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="../../../archive.html">Archive</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="../../../random.html">Randoms</a>
+            </li>
+          </ul> 
+    </div>
+
+    <div class="container" >
+      <div class="content">
+ 
+<!-- ##################################################################################### -->
+<!-- ##################################################################################### -->  
+ 
+
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Web-scrapping-101">Web scrapping 101<a class="anchor-link" href="#Web-scrapping-101">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The best parctice to study programming is by solving a problem. Recently, I found a website that contains a collection of png and jpg files, <a href="http://sites.science.oregonstate.edu/~landaur/Books/CPbook/eBook/Notebooks/Figs/" target="_blank">here</a> the website. It was possible to download them manually one by one but it took time. In this post, I want to scrap all those figures using <em>python</em>, <em>BeautifulSoup</em>, <em>requests</em>, and <em>wget</em>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As the first step, we import the modules,</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">wget</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We sent a <code>get</code> request to the website to get the html and convert it to string text. Moreover, we create a BeautifulSoup object with the html.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">master_url</span><span class="o">=</span><span class="s2">&quot;http://sites.science.oregonstate.edu/~landaur/Books/CPbook/eBook/Notebooks/Figs/&quot;</span>
+<span class="n">html</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">master_url</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+<span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>From the inside of the <code>soup</code> object, we only want to collect the html anchor tag, <code>&lt;a&gt;</code>, beacuse they contain png files we are looking for. The code below shows the first ten of anchor tag.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">soup</span><span class="o">.</span><span class="n">findAll</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[3]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&lt;a href=&#34;/~landaur/Books/CPbook/eBook/Notebooks/Figs/index.php?sort=name&amp;amp;order=asc&#34;&gt;File&lt;/a&gt;,
+ &lt;a href=&#34;/~landaur/Books/CPbook/eBook/Notebooks/Figs/index.php?sort=size&amp;amp;order=asc&#34;&gt;Size&lt;/a&gt;,
+ &lt;a href=&#34;/~landaur/Books/CPbook/eBook/Notebooks/Figs/index.php?sort=date&amp;amp;order=asc&#34;&gt;Date Modified&lt;/a&gt;,
+ &lt;a href=&#34;BackCover.png&#34;&gt;BackCover.png&lt;/a&gt;,
+ &lt;a href=&#34;Cover.jpg&#34;&gt;Cover.jpg&lt;/a&gt;,
+ &lt;a href=&#34;Cover.png&#34;&gt;Cover.png&lt;/a&gt;,
+ &lt;a href=&#34;CoverBackBig.png&#34;&gt;CoverBackBig.png&lt;/a&gt;,
+ &lt;a href=&#34;CoverBackMed.png&#34;&gt;CoverBackMed.png&lt;/a&gt;,
+ &lt;a href=&#34;CoverFrontBig.png&#34;&gt;CoverFrontBig.png&lt;/a&gt;,
+ &lt;a href=&#34;CoverFrontMed.png&#34;&gt;CoverFrontMed.png&lt;/a&gt;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We are only looking for anchor tag that contains figure (png and jpg) files. So, we do not need the first three. We slice the list and assig them to the <code>anchor</code> variable.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">anchor</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">findAll</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)[</span><span class="mi">3</span><span class="p">:]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In the <code>anchor</code> list, we only need the file name. The easiest way to get the file name is using the code below as example of the first element of our list.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">anchor</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[5]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;BackCover.png&#39;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If we noticed that each figure file can be accessed by put the file name to the end of <code>master_url</code>, after the slash. We use python <code>format()</code> method and loop for each element (figure file name) in the <code>anchor</code> list.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;http://sites.science.oregonstate.edu/~landaur/Books/CPbook/eBook/Notebooks/Figs/</span><span class="si">{}</span><span class="s2">&quot;</span>
+<span class="n">listfn</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">anchor</span><span class="p">:</span>
+    <span class="n">listfn</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">url</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We have a list of the link to each figure. Below are the first 10 of the link in the list.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">listfn</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[7]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&#39;http://sites.science.oregonstate.edu/~landaur/Books/CPbook/eBook/Notebooks/Figs/BackCover.png&#39;,
+ &#39;http://sites.science.oregonstate.edu/~landaur/Books/CPbook/eBook/Notebooks/Figs/Cover.jpg&#39;,
+ &#39;http://sites.science.oregonstate.edu/~landaur/Books/CPbook/eBook/Notebooks/Figs/Cover.png&#39;,
+ &#39;http://sites.science.oregonstate.edu/~landaur/Books/CPbook/eBook/Notebooks/Figs/CoverBackBig.png&#39;,
+ &#39;http://sites.science.oregonstate.edu/~landaur/Books/CPbook/eBook/Notebooks/Figs/CoverBackMed.png&#39;,
+ &#39;http://sites.science.oregonstate.edu/~landaur/Books/CPbook/eBook/Notebooks/Figs/CoverFrontBig.png&#39;,
+ &#39;http://sites.science.oregonstate.edu/~landaur/Books/CPbook/eBook/Notebooks/Figs/CoverFrontMed.png&#39;,
+ &#39;http://sites.science.oregonstate.edu/~landaur/Books/CPbook/eBook/Notebooks/Figs/Fig1_1a.png&#39;,
+ &#39;http://sites.science.oregonstate.edu/~landaur/Books/CPbook/eBook/Notebooks/Figs/Fig1_1b.png&#39;,
+ &#39;http://sites.science.oregonstate.edu/~landaur/Books/CPbook/eBook/Notebooks/Figs/Fig1_2a.png&#39;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Finally, we can download them iteratively using <code>download()</code> method from wget module. As you can see, the second argument of <code>download()</code> method is the directory where we want to put our downloaded file. In our case, we put them in <code>figs</code> folder.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">fn</span> <span class="ow">in</span> <span class="n">listfn</span><span class="p">:</span>
+    <span class="n">wget</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="s1">&#39;figs&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+ 
+        
+
+
+<!-- ##################################################################################### -->
+<!-- ##################################################################################### --> 
+       
+        <br>
+        
+        <em>tags:</em>
+        <a href="tag/simulation.html" class="btn btn-lg btn-sm">Simulation</a>
+        <a href="#" class="btn btn-lg btn-sm">Statistics</a>
+      </div>    
+    </div>
+
+
+    <div class="container">
+        <div class="separator"></div>
+    </div>
+
+
+
+    
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>
